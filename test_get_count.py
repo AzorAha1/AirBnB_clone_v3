@@ -7,5 +7,9 @@ from models.state import State
 print("All objects: {}".format(storage.count()))
 print("State objects: {}".format(storage.count(State)))
 
-first_state_id = list(storage.all(State).values())[0].id
-print("First state: {}".format(storage.get(State, first_state_id)))
+states = storage.all(State).values()
+if states:
+    first_state_id = list(storage.all(State).values())[0].id
+    print("First state: {}".format(storage.get(State, first_state_id)))
+else:
+    print("There are no States yet")
