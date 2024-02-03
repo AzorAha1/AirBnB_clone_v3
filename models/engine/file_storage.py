@@ -70,15 +70,21 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """retrieves one object from all classes"""
         key = f'{cls.__name__}.{id}'
         return self.all().get(key)
 
     def count(self, cls=None):
+        """counts the number of objects in storage"""
         if not cls:
             return len(self.all())
         else:
-            total = 0
-            for key, value in self.all().items():
-                if value.__class__.__name__ == cls:
-                    total += 1
-            return total
+            return len(self.__session.query(cls).all())
+        #if not cls:
+         #   return len(self.all())
+        #else:
+         #   total = 0
+          #  for key, value in self.all().items():
+           #     if value.__class__.__name__ == cls:
+            #        total += 1
+            #return total
