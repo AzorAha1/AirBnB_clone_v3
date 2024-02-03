@@ -78,6 +78,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
+    def test_get(self):
+        storage = FileStorage()
+        the_dict = storage.all()
+        self.assertEqual(type(the_dict), dict)
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
