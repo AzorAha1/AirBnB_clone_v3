@@ -77,14 +77,10 @@ class FileStorage:
     def count(self, cls=None):
         """counts the number of objects in storage"""
         if not cls:
-            return len(self.all())
+           return len(self.all())
         else:
-            return len(self.__session.query(cls).all())
-        #if not cls:
-         #   return len(self.all())
-        #else:
-         #   total = 0
-          #  for key, value in self.all().items():
-           #     if value.__class__.__name__ == cls:
-            #        total += 1
-            #return total
+            total = 0
+            for key, value in self.all().items():
+                if value.__class__.__name__ == cls:
+                    total += 1
+        return total
