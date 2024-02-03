@@ -76,8 +76,18 @@ class DBStorage:
         self.__session.remove()
     
     def get(self, cls, id):
-        if cls in classes is None:
+        if cls not in classes or cls is None:
            return None
         else:
-            return self.__session.query(classes[cls].filter_by(id)).first()
+            return self.__session.query(classes[cls]).filter_by(id=id).first()
     
+    def count(self, cls=None):
+        if cls is None:
+            allcount = 0
+            for aclass in classes.values():
+                count = self.__session.query(aclass).count()
+                allcount+=count
+            return allcount
+        else:
+            count = self.__session.query(cls).count()
+            return count
