@@ -92,8 +92,8 @@ class FileStorage:
         if not cls:
             return len(self.all())
         else:
-            total = 0
+            verified_items = {}
             for key, value in self.all().items():
-                if cls  or value.__class__.__name__ == cls.__name__:
-                    total += 1
-        return total
+                if value.__class__.__name__ == cls.__name__:
+                    verified_items[key] = value
+        return len(verified_items)
