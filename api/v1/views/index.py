@@ -10,6 +10,7 @@ def status():
     """Give the status in a JSON format"""
     return jsonify({'status': 'OK'})
 
+
 @app_views.route('/api/v1/stats')
 def stats():
     """Give the stats in a Json format"""
