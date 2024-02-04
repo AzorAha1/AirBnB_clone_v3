@@ -94,6 +94,6 @@ class FileStorage:
         else:
             total = 0
             for key, value in self.all().items():
-                if cls  or value.__class__.__name__ == cls:
+                if cls  or value.__class__.__name__ == cls.__name__:
                     total += 1
         return total
