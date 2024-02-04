@@ -11,8 +11,8 @@ dm = ['DELETE']
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
     """retrieves the list of all states objects"""
-    states = storage.all(State)
-    return jsonify([obj.to_dict() for obj in states.values()])
+    states = storage.all(State).values()
+    return jsonify([state.to_dict() for state in states])
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
