@@ -44,7 +44,7 @@ def create_state():
     if 'name' not in data:
         abort(400, 'Missing name')
     new_state = State(**data)
-    new_state.save()
+    storage.save()
     return jsonify(new_state.to_dict()), 201
 
 
