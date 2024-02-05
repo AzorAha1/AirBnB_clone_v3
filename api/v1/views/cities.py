@@ -13,12 +13,16 @@ pt = ['POST']
 @app_views.route('/states/<state_id>/cities', methods=gt, strict_slashes=False)
 def getallcity(state_id):
     """get all cities"""
-    cities = storage.all(City).values()
-    # filter cities that match the state id
-    correctcities = [city for city in cities if city.state_id == state_id]
-    if not correctcities:
+    # cities = storage.all(City).values()
+    # # filter cities that match the state id
+    # correctcities = [city for city in cities if city.state_id == state_id]
+    # if not correctcities:
+    #     abort(404)
+    # return jsonify([city.to_dict() for city in correctcities])
+    state = storage.get(State, state_id)
+    if not state:
         abort(404)
-    return jsonify([city.to_dict() for city in correctcities])
+    return jsonify([city.to_dict() for city in state.cities])
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
