@@ -20,7 +20,7 @@ def allamenity():
 def getamenitybyid(amenity_id):
     """retrieve Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+    if not amenity:
         abort(404)
     return jsonify(amenity.to_dict())
 
@@ -29,7 +29,7 @@ def getamenitybyid(amenity_id):
 def delete_amenity(amenity_id):
     """delete amenity"""
     amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+    if not amenity:
         abort(404)
     storage.delete(amenity)
     storage.save()
@@ -45,7 +45,7 @@ def create_amenity():
     if 'name' not in data:
         abort(400, 'Missing name')
     new_amenity = Amenity(**data)
-    storage.save()
+    new_amenity.save()
     return jsonify(new_amenity.to_dict()), 201
 
 
