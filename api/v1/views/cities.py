@@ -52,6 +52,7 @@ def create_city(state_id):
     if 'name' not in thedata:
         abort(400, 'Missing name')
     thenewcity = City(name=thedata['name'], state_id=state_id)
+    storage.new(thenewcity)
     storage.save()
     return jsonify(thenewcity.to_dict()), 201
 
