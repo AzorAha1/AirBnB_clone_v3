@@ -25,7 +25,7 @@ def getallcity(state_id):
 def getcitybyid(city_id):
     """get city by id"""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
     return jsonify(city.to_dict())
 
@@ -34,7 +34,7 @@ def getcitybyid(city_id):
 def deletecity(city_id):
     """delete city by id"""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
     storage.delete(city)
     storage.save()
