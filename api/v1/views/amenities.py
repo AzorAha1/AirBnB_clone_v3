@@ -20,7 +20,7 @@ def allamenity():
 def getamenitybyid(amenity_id):
     """retrieve Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
-    if not amenity:
+    if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
 
