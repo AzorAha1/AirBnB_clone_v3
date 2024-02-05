@@ -5,6 +5,8 @@ from api.v1.views import app_views
 from models import storage
 from flask import abort, jsonify, request
 from models.amenity import Amenity
+gt = ['GET']
+dt = ['DELETE']
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
@@ -14,7 +16,7 @@ def allamenity():
     return jsonify([amenity.to_dict() for amenity in amenities])
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=gt, strict_slashes=False)
 def getamenitybyid(amenity_id):
     """retrieve Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
@@ -23,8 +25,9 @@ def getamenitybyid(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=dt, strict_slashes=False)
 def delete_amenity(amenity_id):
+    """delete amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -35,6 +38,7 @@ def delete_amenity(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
+    """create amenity"""
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
@@ -56,7 +60,6 @@ def update_amenity(amenity_id):
         abort(400, 'Not a JSON')
     elif not amenity:
         abort(404)
-    
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, key, value)
