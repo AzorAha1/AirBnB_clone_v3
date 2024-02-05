@@ -2,12 +2,12 @@
 """ a new view for Place objects that handles all
 default RESTFul API actions"""
 
-from api.v1.views import app_views
-from models import storage
 from flask import abort, jsonify, request
+from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
+from api.v1.views import app_views
 
 gt = ['GET']
 dt = ['DELETE']
@@ -24,7 +24,7 @@ def get_all_places(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=gt, strict_slashes=False)
-def place_id(place_id):
+def get_place(place_id):
     """retrieves Place object"""
     place = storage.get(Place, place_id)
     if not place:
