@@ -25,7 +25,7 @@ def getallcity(state_id):
 def getcitybyid(city_id):
     """get city by id"""
     city = storage.get(City, city_id)
-    if not city:
+    if city is None:
         abort(404)
     return jsonify(city.to_dict())
 
