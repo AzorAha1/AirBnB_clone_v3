@@ -69,7 +69,7 @@ def create_place():
 def update_place(place_id):
     """update a Place object"""
     place = storage.get(Place, place_id)
-    if not user:
+    if not place:
         abort(404)
     data = request.get_json()
     if not data:
