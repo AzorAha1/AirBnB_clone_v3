@@ -70,6 +70,8 @@ def updatecity(city_id):
     thedata = request.get_json()
     if not thedata:
         abort(400, 'Not a JSON')
+    elif city is None:
+        abort(404)
     for key, value in thedata.items():
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(city, key, value)
