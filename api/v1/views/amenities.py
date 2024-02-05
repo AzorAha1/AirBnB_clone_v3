@@ -7,6 +7,7 @@ from flask import abort, jsonify, request
 from models.amenity import Amenity
 gt = ['GET']
 dt = ['DELETE']
+pt = ['PUT']
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
@@ -49,7 +50,7 @@ def create_amenity():
     return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('amenities/<amenity_id>', methods=pt, strict_slashes=False)
 def update_amenity(amenity_id):
     """update amenity"""
     amenity = storage.get(Amenity, amenity_id)
