@@ -59,7 +59,7 @@ def create_city(state_id):
     # thenewcity = City(name=thedata['name'], state_id=state_id)
     # storage.new(thenewcity)
     # storage.save()
-    thedata['state_id'] = state_id
+    # thedata['state_id'] = state_id
     city = City(**thedata)
     storage.save()
     return jsonify(city.to_dict()), 201
