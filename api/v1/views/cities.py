@@ -57,7 +57,7 @@ def create_city(state_id):
     # storage.save()
     thedata['state_id'] = state_id
     city = City(**thedata)
-    city.save()
+    storage.save()
     return jsonify(city.to_dict()), 201
 
 
