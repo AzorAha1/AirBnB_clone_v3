@@ -31,7 +31,7 @@ def all_places(city_id):
         if not storage.get(User, place.user_id):
             abort(404)
         if 'name' not in place:
-            abort(300, 'Missing name')
+            abort(400, 'Missing name')
         new_place = Place(**place)
         new_place.save()
         return jsonify(new_place.to_dict()), 201
