@@ -5,8 +5,9 @@ default RESTFul API actions"""
 from api.v1.views import app_views
 from models import storage
 from flask import abort, jsonify, request
-from models.user import Place
-from models.user import City
+from models.place import Place
+from models.city import City
+from models.user import User
 
 gt = ['GET']
 dt = ['DELETE']
@@ -54,10 +55,12 @@ def create_place():
     if 'user_id' not in new_place:
         abort(400, 'Missing user_id')
     user_id = new_place['user_id']
-    if not storage.get(User, user_id):
+    user = storage.get(User, user_id)
+    if not user:
         abort(404)
     if 'name' not in new_place:
         abort(400, 'Missing name')
+
     place = Place(**new_place)
     setattr(place, 'city_id', city_id)
     storage.new(place)
