@@ -51,10 +51,12 @@ def create_city(state_id):
         abort(400, 'Not a JSON')
     if 'name' not in thedata:
         abort(400, 'Missing name')
-    thenewcity = City(name=thedata['name'], state_id=state_id)
-    storage.new(thenewcity)
-    storage.save()
-    return jsonify(thenewcity.to_dict()), 201
+    # thenewcity = City(name=thedata['name'], state_id=state_id)
+    # storage.new(thenewcity)
+    # storage.save()
+    state['state_id'] = state_id
+    city = City(**thedata)
+    return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
@@ -70,3 +72,4 @@ def updatecity(city_id):
             setattr(city, key, value)
     storage.save()
     return jsonify(city.to_dict()), 200
+
