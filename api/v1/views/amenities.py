@@ -45,7 +45,7 @@ def create_amenity():
     if 'name' not in data:
         abort(400, 'Missing name')
     new_amenity = Amenity(**data)
-    new_amenity.save()
+    storage.save()
     return jsonify(new_amenity.to_dict()), 201
 
 
@@ -54,7 +54,7 @@ def update_amenity(amenity_id):
     """update amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
-        abort(400, 'Not a Json')
+        abort(404)
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
