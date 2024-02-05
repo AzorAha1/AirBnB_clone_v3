@@ -6,6 +6,7 @@ from flask import abort, jsonify, request
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 from api.v1.views import app_views
 
 gt = ['GET']
@@ -43,13 +44,13 @@ def delete_place(place_id):
 
 
 @app_views.route('/<city_id>/places', methods=['POST'], strict_slashes=False)
-def create_place():
+def create_place(city_id):
     """create a new Place"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
     new_place = request.get_json()
-    if not new_place:
+    if new_place is None:
         abort(400, 'Not a JSON')
     if 'user_id' not in new_place:
         abort(400, 'Missing user_id')
