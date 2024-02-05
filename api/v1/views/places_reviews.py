@@ -12,7 +12,7 @@ from flask import request, abort, jsonify
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'],
                  strict_slashes=False)
-def all_reviews(city_id):
+def all_reviews(place_id):
     """gets a list of all reviews of a place or create a new Review"""
     place = storage.get(Place, place_id)
     if not place:
@@ -23,16 +23,16 @@ def all_reviews(city_id):
         return jsonify(review_list)
 
     if request.method == 'POST':
-        review = request.get_json()
-        if not review:
+        review_data = request.get_json()
+        if not review_data:
             abort(400, 'Not a JSON')
-        if 'user_id' not in review:
+        if 'user_id' not in review_data:
             abort(400, 'Missing user_id')
-        if not storage.get(User, review['user_id']):
+        if not storage.get(User, review_data['user_id']):
             abort(404)
-        if 'text' not in review:
+        if 'text' not in review_data:
             abort(400, 'Missing text')
-        new_review = Place(**review)
+        new_review = Review(**review_data)
         new_review.save()
         return jsonify(new_review.to_dict()), 201
 
@@ -40,7 +40,7 @@ def all_reviews(city_id):
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def review_by_id(review_id):
-    """gets, updates or deletes a review with a specific id"""
+    """Gets, updates or deletes a review with a specific id"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
