@@ -43,6 +43,7 @@ def deletecity(city_id):
 
 @app_views.route('states/<state_id>/cities', methods=pt, strict_slashes=False)
 def create_city(state_id):
+    """create city"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
