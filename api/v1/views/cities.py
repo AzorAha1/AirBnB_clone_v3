@@ -34,7 +34,7 @@ def getcitybyid(city_id):
 def deletecity(city_id):
     """delete city by id"""
     city = storage.get(City, city_id)
-    if not city:
+    if city is None:
         abort(404)
     storage.delete(city)
     storage.save()
@@ -52,7 +52,6 @@ def create_city(state_id):
     if 'name' not in thedata:
         abort(400, 'Missing name')
     thenewcity = City(name=thedata['name'], state_id=state_id)
-    storage.new(thenewcity)
     storage.save()
     return jsonify(thenewcity.to_dict()), 201
 
