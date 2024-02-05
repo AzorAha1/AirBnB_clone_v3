@@ -18,7 +18,7 @@ pt = ['PUT']
 def get_all_places(city_id):
     """list of all Place objects ids"""
     city = storage.get(City, city_id)
-    if not city:
+    if city is None:
         abort(404)
     return jsonify([place.to_dict() for place in city.places])
 
@@ -40,7 +40,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route('/<city_id>/places', methods=['POST'], strict_slashes=False)
@@ -82,4 +82,4 @@ def update_place(place_id):
                        'created_at', 'updated_at']:
             setattr(place, key, value)
     storage.save()
-    return jsonify(place.to_dict()), 200
+    return jsonify(place.to_dict())
