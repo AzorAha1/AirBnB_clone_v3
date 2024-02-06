@@ -28,9 +28,9 @@ def all_places(city_id):
             abort(400, 'Not a JSON')
         if 'user_id' not in place:
             abort(400, 'Missing user_id')
-        if not storage.get(User, place.user_id):
+        if not storage.get(User, place['user_id']):
             abort(404)
-        if 'name' not in place:
+        if 'name' not in place or not place['name']:
             abort(400, 'Missing name')
         new_place = Place(**place)
         new_place.save()
